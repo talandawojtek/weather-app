@@ -3,7 +3,7 @@
     <div class = "weather-today">
       <div class="city-name">
         <p>{{cityAttribute.name}}</p>
-        <button class="btn-add" @click="addToFavorites">Add</button>
+        <button :style="[check===true? active : noActive]" class="btn-add" @click="addToFavorites">Add</button>
       </div>
       <div class="city-weather">{{cityAttribute.weather}}</div>
       <div class="image">
@@ -11,7 +11,7 @@
       </div>
       <div class="day-title">
         <p>{{cityAttribute.day}}</p>
-        <p>{{cityAttribute.updated}}</p>
+        <p class="updated">{{cityAttribute.updated}}</p>
       </div>
       <div class="conditions">
         <p class="wind">{{cityAttribute.wind}}m/s</p>
@@ -22,17 +22,29 @@
   </main>
 </template>
 <script>
-import { mapState } from 'vuex';
-import { mapMutations } from 'vuex';
+import { mapState,mapMutations } from 'vuex';
 export default {
   name:"WeatherCity",
+  data:function(){
+    return{
+      noActive:{
+        background: 'rgba(0, 68, 255, 0.541)',
+      },
+      active:{
+        boxShadow:'0 0 0',
+        filter:'opacity(.3)',
+      }
+    }
+  },
   computed:mapState([
     'cityAttribute',
+    'check',
   ]),
   methods:{
     ...mapMutations(['addToFavorites'])
   },
   updated() {
+    this.$store.dispatch('loadWeatherForAdded')
     this.$store.subscribe((mutation, state) => {
     sessionStorage.setItem('store', JSON.stringify(state));
     });
@@ -59,9 +71,9 @@ export default {
     z-index: 0;
     width: calc(87%/6 + 240px);
     position: absolute;
-    transform: translate(-50%,-50%);
+    transform: translateX(-50%);
     left:50%;
-    top:calc(45%/2 + 130px);
+    top:calc(45%/3 + 50px);
     .weather-today{
       display:grid;
       grid-template-areas: 
@@ -72,7 +84,6 @@ export default {
       grid-template-columns: 1fr 110.5px 1fr;
       button{
         text-shadow: 0 3px 6px rgba(0, 0, 0, 0.349);
-        background: rgba(0, 68, 255, 0.541);
         border-radius: 21px;
         border:0;
         outline: 0;
@@ -86,8 +97,7 @@ export default {
         @include flex;
         font-size:23px;
         button{line-height: 1px; margin-left:10px;}
-        button:hover{cursor: pointer;}
-        button:active{transform: scale(1.3);background: rgba(0, 255, 0, 0.397);}
+        button:hover{cursor: pointer;transform: scale(1.1);}
       };
       .city-weather{
         grid-area: weather;
@@ -99,6 +109,7 @@ export default {
         flex-direction: column;
         letter-spacing: -1px;
         margin-right: 10px;
+        .updated{letter-spacing: 0;}
       };
       .image{
         grid-area: image;

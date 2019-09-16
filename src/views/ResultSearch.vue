@@ -25,7 +25,7 @@ export default {
     animation-timing-function: cubic-bezier(0, 0, 0.55, 1.71);
     animation-fill-mode: forwards;
     animation-duration: 1s;
-    animation-delay: .3s;
+    animation-delay: .4s;
   }
   @keyframes result {
     from{opacity: 0;}

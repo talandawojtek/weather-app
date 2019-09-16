@@ -85,8 +85,8 @@ export default {
     height: 240px;
   }
   .circle-three{
-    width: 280px;
-    height: 280px;
+    width: 260px;
+    height: 260px;
   }
 }
 @media (min-width: 1366px){
@@ -99,8 +99,8 @@ export default {
     height: 350px;
   }
   .circle-three{
-    width: 350px;
-    height: 350px;
+    width: 330px;
+    height: 330px;
   }
 }
 </style>

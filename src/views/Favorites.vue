@@ -17,9 +17,7 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
-import { mapActions } from 'vuex'
-import { mapMutations } from 'vuex'
+import { mapMutations,mapState,mapActions } from 'vuex'
 export default {
   name:"Favorites",
   computed:mapState([
@@ -63,8 +61,9 @@ export default {
             "weather  image";
             .added-name{
               grid-area: name;
-              font-size: 23px;
+              font-size: 22px;
               display: flex;
+              text-align: left;
             };
             .added-weather{
               grid-area: weather;

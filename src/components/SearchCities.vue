@@ -1,28 +1,24 @@
 <template>
   <nav class="search-panel">
     <form>
-      <span><input class="search" v-model="valueSearch" type="text" :placeholder="placeholder"></span>
-      <div class="filtered-list" v-if="valueSearch!==cityAttribute.name&&valueSearch!==''">
-        <button class="btn-search" @click.prevent="selectedCity(city)" v-for="(city,value) in filteredList" :key="value">{{city.city}}</button>
-      </div>
+      <span><input class="search" :value="valueSearch" @keyup="changeKey" type="text" :placeholder="placeholder"></span>
+      <ul class="filtered-list" v-if="valueSearch!==cityAttribute.name&&valueSearch!==''">
+        <button class="btn-search" @click.prevent="selectedCity(city)" v-for="(city,value) in filteredList" :key="value">{{city.name}}</button>
+      </ul>
     </form>
   </nav>
 </template>
 <script>
-import { mapState } from 'vuex';
-import { mapMutations } from 'vuex'
-import { setInterval } from 'timers';
+import { mapMutations,mapState } from 'vuex'
 export default {
   name:"SearchCities",
   computed:{
-    valueSearch: {
-      get () {return this.$store.state.valueSearch},
-      set (value){this.$store.commit('valueSearch', value)}
-    },
-    ...mapState(['citiesJSON','cityAttribute','selectedCityActive','updated','placeholder']),
+    ...mapState(['citiesJSON','cityAttribute','selectedCityActive','updated','placeholder','valueSearch']),
     filteredList() {return this.$store.getters.filteredList},
   },
-  methods:{...mapMutations(['selectedCity'])},
+  methods:{
+    ...mapMutations(['selectedCity','changeKey']),
+    },
   beforeCreate() {
     this.$store.dispatch('loadWeather')
     if(JSON.parse(sessionStorage.getItem('cityAttribute'))!==null)
@@ -36,7 +32,7 @@ export default {
   },
   beforeUpdate() {
     if(this.$store.state.selectedCityActive===true){
-        // this.$store.state.cityAttribute
+      console.log('update')
         this.$store.dispatch('loadWeather');
         this.$store.state.selectedCityActive=false
       }
@@ -80,7 +76,8 @@ export default {
         font-size:15px;
         margin-left:12px;
         color: rgba(0, 0, 0, 0.45);
-      }
+      };
+      .btn-search:nth-child(1n+8){display:none;}
       .btn-search:hover{
         cursor:pointer;
         filter: opacity(.5);

@@ -12,8 +12,7 @@
 import Circles from './components/Circles.vue'
 import ResultSearch from './views/ResultSearch.vue'
 import Favorites from './views/Favorites.vue'
-import { mapState } from 'vuex'
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
   components:{
     Circles,
@@ -56,7 +55,7 @@ body{
     position: absolute;
     transform: translate(-50%,-50%);
     left:50%;
-    top:calc(70%/2 + 240px);
+    top:calc(90%/3 + 320px);
     text-shadow: 0 3px 6px rgba(0, 0, 0, 0.349);
     background: rgba(0, 68, 255, 0.541);
     border-radius: 21px;
